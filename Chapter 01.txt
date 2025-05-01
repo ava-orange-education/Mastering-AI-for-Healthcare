@@ -1,0 +1,8 @@
+
+
+print("Welcome to AI! Here are some reasons why you should learn about it:")
+print("- AI is transforming virtually every industry, from healthcare to finance to transportation.")
+print("- AI can help solve some of the world's most pressing problems, such as climate change and livelihood.")
+print("- AI is one of the fastest-growing fields, with many exciting job opportunities and high salaries.")
+print("- AI can be used to create intelligent machines that can improve human lives and make our world a better place.")
+print("- Learning about AI can also help you develop valuable skills, such as problem-solving, critical thinking, and creativity.")

@@ -1,0 +1,531 @@
+import numpy as np
+from sklearn.linear_model import LinearRegression
+
+# Creating some random data for demonstration
+X = np.array([[1], [2], [3], [4], [5]])
+y = np.array([2, 4, 5, 4, 5])
+
+# Creating a linear regression model
+model = LinearRegression()
+
+# Training the model on the data
+model.fit(X, y)
+
+# Printing the slope and intercept of the regression line
+print('Slope:', model.coef_[0])
+print('Intercept:', model.intercept_)
+
+# Predicting on new data
+X_new = np.array([[6], [7], [8]])
+y_new = model.predict(X_new)
+print('Predicted values:', y_new)
+
+----------------------------------------------------------
+
+
+import numpy as np
+from sklearn.linear_model import LogisticRegression
+
+# Creating some random data for demonstration
+X = np.array([[1], [2], [3], [4], [5], [6], [7], [8]])
+y = np.array([0, 0, 0, 0, 1, 1, 1, 1])
+
+# Creating a logistic regression model
+model = LogisticRegression()
+
+# Training the model on the data
+model.fit(X, y)
+
+# Printing the slope and intercept of the regression line
+print('Slope:', model.coef_[0][0])
+print('Intercept:', model.intercept_[0])
+
+# Predicting on new data
+X_new = np.array([[9], [10], [11]])
+y_new = model.predict(X_new)
+print('Predicted values:', y_new)
+
+--------------------------------------------------------
+
+# Import necessary libraries 
+from sklearn.ensemble import RandomForestClassifier 
+from sklearn.datasets import load_iris 
+from sklearn.model_selection import train_test_split 
+
+# Load the iris dataset iris = load_iris() 
+
+# Split the dataset into training and testing sets 
+X_train, X_test, y_train, y_test = train_test_split(iris.data, iris.target, test_size=0.3) 
+
+# Create a Random Forest classifier with 100 trees
+rfc = RandomForestClassifier(n_estimators=100) 
+
+# Fit the model on the training data 
+rfc.fit(X_train, y_train) 
+
+# Predict the classes of the testing data 
+y_pred = rfc.predict(X_test)
+
+# Evaluate the model 
+print("Accuracy:", rfc.score(X_test, y_test))
+
+---------------------------------------------------------
+
+from sklearn import datasets
+from sklearn.model_selection import train_test_split
+from sklearn.svm import SVC
+from sklearn.metrics import accuracy_score
+
+# Load the iris dataset
+iris = datasets.load_iris()
+X = iris.data
+y = iris.target
+
+# Split the dataset into training and testing sets
+X_train, X_test, y_train, y_test = train_test_split(X, y, test_size=0.3)
+
+# Create an SVM classifier object
+classifier = SVC(kernel='linear')
+
+# Train the classifier on the training set
+classifier.fit(X_train, y_train)
+
+# Predict the labels of the test set
+y_pred = classifier.predict(X_test)
+
+# Calculate the accuracy of the classifier
+accuracy = accuracy_score(y_test, y_pred)
+
+print("Accuracy:", accuracy)
+
+--------------------------------------------------------------------
+
+from sklearn import datasets
+from sklearn.model_selection import train_test_split
+from sklearn.neighbors import KNeighborsClassifier
+from sklearn.metrics import accuracy_score
+
+# Load the iris dataset
+iris = datasets.load_iris()
+X = iris.data
+y = iris.target
+
+# Split the dataset into training and testing sets
+X_train, X_test, y_train, y_test = train_test_split(X, y, test_size=0.3)
+
+# Create a KNN classifier object
+classifier = KNeighborsClassifier(n_neighbors=5)
+
+# Train the classifier on the training set
+classifier.fit(X_train, y_train)
+
+# Predict the labels of the test set
+y_pred = classifier.predict(X_test)
+
+# Calculate the accuracy of the classifier
+accuracy = accuracy_score(y_test, y_pred)
+
+print("Accuracy:", accuracy)
+
+-------------------------------------------------------------
+
+from sklearn.cluster import KMeans
+import numpy as np
+
+# Create a random dataset
+X = np.random.rand(100, 2)
+
+# Create a KMeans clustering object
+kmeans = KMeans(n_clusters=3)
+
+# Fit the KMeans object to the dataset
+kmeans.fit(X)
+
+# Get the cluster labels for each data point
+labels = kmeans.labels_
+
+# Get the cluster centroids
+centroids = kmeans.cluster_centers_
+
+------------------------------------------------
+from sklearn.cluster import KMeans
+import numpy as np
+
+# Create a random dataset
+X = np.random.rand(100, 2)
+
+# Create a KMeans clustering object
+kmeans = KMeans(n_clusters=3)
+
+# Fit the KMeans object to the dataset
+kmeans.fit(X)
+
+# Get the cluster labels for each data point
+labels = kmeans.labels_
+
+# Get the cluster centroids
+centroids = kmeans.cluster_centers_
+
+-----------------------------------------------
+
+from sklearn.cluster import DBSCAN
+import numpy as np
+
+# Create a random dataset
+X = np.random.rand(100, 2)
+
+# Create a DBSCAN clustering object
+dbscan = DBSCAN(eps=0.3, min_samples=5)
+
+# Fit the DBSCAN object to the dataset
+dbscan.fit(X)
+
+# Get the cluster labels for each data point
+labels = dbscan.labels_
+----------------------------------------------
+
+from keras.layers import Input, Dense
+from keras.models import Model
+
+# Define the input shape
+input_shape = (784,)
+
+# Define the size of the encoded representation
+encoding_dim = 32
+
+# Define the input layer
+input_layer = Input(shape=input_shape)
+
+# Define the encoder layers
+encoded = Dense(encoding_dim, activation='relu')(input_layer)
+
+# Define the decoder layers
+decoded = Dense(input_shape[0], activation='sigmoid')(encoded)
+
+# Define the autoencoder model
+autoencoder = Model(input_layer, decoded)
+
+# Define the encoder model
+encoder = Model(input_layer, encoded)
+
+# Define the decoder model
+encoded_input = Input(shape=(encoding_dim,))
+decoder_layer = autoencoder.layers[-1]
+decoder = Model(encoded_input, decoder_layer(encoded_input))
+
+# Compile the autoencoder model
+autoencoder.compile(optimizer='adadelta', loss='binary_crossentropy')
+
+# Train the autoencoder model
+from keras.datasets import mnist
+
+(x_train, _), (x_test, _) = mnist.load_data()
+
+# Normalize the input data
+x_train = x_train.astype('float32') / 255.
+x_test = x_test.astype('float32') / 255.
+
+# Flatten the input data
+x_train = x_train.reshape((len(x_train), np.prod(x_train.shape[1:])))
+x_test = x_test.reshape((len(x_test), np.prod(x_test.shape[1:])))
+
+# Train the autoencoder model
+autoencoder.fit(x_train, x_train,
+                epochs=50,
+                batch_size=256,
+                shuffle=True,
+                validation_data=(x_test, x_test))
+
+# Evaluate the autoencoder model
+encoded_imgs = encoder.predict(x_test)
+decoded_imgs = decoder.predict(encoded_imgs)
+
+--------------------------------------------------------
+
+from keras.models import Sequential
+from keras.layers import Conv2D, MaxPooling2D, Flatten, Dense
+
+# Define the CNN model
+model = Sequential()
+
+# Add the convolutional layers
+model.add(Conv2D(32, (3, 3), activation='relu', input_shape=(28, 28, 1)))
+model.add(MaxPooling2D((2, 2)))
+model.add(Conv2D(64, (3, 3), activation='relu'))
+model.add(MaxPooling2D((2, 2)))
+model.add(Conv2D(64, (3, 3), activation='relu'))
+
+# Add the fully connected layers
+model.add(Flatten())
+model.add(Dense(64, activation='relu'))
+model.add(Dense(10, activation='softmax'))
+
+# Compile the model
+model.compile(optimizer='adam', loss='categorical_crossentropy', metrics=['accuracy'])
+
+# Train the model
+from keras.datasets import mnist
+from keras.utils import to_categorical
+
+# Load the MNIST dataset
+(x_train, y_train), (x_test, y_test) = mnist.load_data()
+
+# Normalize the input data
+x_train = x_train.astype('float32') / 255.
+x_test = x_test.astype('float32') / 255.
+
+# Reshape the input data to add a channel dimension
+x_train = x_train.reshape((x_train.shape[0], 28, 28, 1))
+x_test = x_test.reshape((x_test.shape[0], 28, 28, 1))
+
+# Convert the target labels to categorical
+y_train = to_categorical(y_train)
+y_test = to_categorical(y_test)
+
+# Train the model
+model.fit(x_train, y_train, epochs=5, batch_size=64, validation_data=(x_test, y_test))
+
+--------------------------------------------------
+
+from keras.models import Sequential
+from keras.layers import SimpleRNN, Dense
+
+# Define the RNN model
+model = Sequential()
+
+# Add the recurrent layer
+model.add(SimpleRNN(32, input_shape=(10, 1)))
+
+# Add the output layer
+model.add(Dense(1, activation='sigmoid'))
+
+# Compile the model
+model.compile(optimizer='adam', loss='binary_crossentropy', metrics=['accuracy'])
+
+# Train the model
+import numpy as np
+
+# Generate some dummy data
+x_train = np.random.random((1000, 10, 1))
+y_train = np.random.randint(2, size=(1000, 1))
+
+# Train the model
+model.fit(x_train, y_train, epochs=10, batch_size=32)
+
+---------------------------------------------------------------
+
+
+from keras.models import Sequential
+from keras.layers import LSTM, Dense
+
+# Define the LSTM model
+model = Sequential()
+
+# Add the LSTM layer
+model.add(LSTM(32, input_shape=(10, 1)))
+
+# Add the output layer
+model.add(Dense(1, activation='sigmoid'))
+
+# Compile the model
+model.compile(optimizer='adam', loss='binary_crossentropy', metrics=['accuracy'])
+
+# Train the model
+import numpy as np
+
+# Generate some dummy data
+x_train = np.random.random((1000, 10, 1))
+y_train = np.random.randint(2, size=(1000, 1))
+
+# Train the model
+model.fit(x_train, y_train, epochs=10, batch_size=32)
+
+------------------------------------------------------------
+
+from keras.models import Sequential
+from keras.layers import GRU, Dense
+
+# Define the GRU model
+model = Sequential()
+
+# Add the GRU layer
+model.add(GRU(32, input_shape=(10, 1)))
+
+# Add the output layer
+model.add(Dense(1, activation='sigmoid'))
+
+# Compile the model
+model.compile(optimizer='adam', loss='binary_crossentropy', metrics=['accuracy'])
+
+# Train the model
+import numpy as np
+
+# Generate some dummy data
+x_train = np.random.random((1000, 10, 1))
+y_train = np.random.randint(2, size=(1000, 1))
+
+# Train the model
+model.fit(x_train, y_train, epochs=10, batch_size=32)
+
+---------------------------------------------------------------------
+
+import tensorflow as tf
+import numpy as np
+import matplotlib.pyplot as plt
+
+# Define the generator network
+def make_generator_model():
+    model = tf.keras.Sequential()
+    model.add(tf.keras.layers.Dense(7*7*256, use_bias=False, input_shape=(100,)))
+    model.add(tf.keras.layers.BatchNormalization())
+    model.add(tf.keras.layers.LeakyReLU())
+
+    model.add(tf.keras.layers.Reshape((7, 7, 256)))
+    assert model.output_shape == (None, 7, 7, 256) # Note: None is the batch size
+
+    model.add(tf.keras.layers.Conv2DTranspose(128, (5, 5), strides=(1, 1), padding='same', use_bias=False))
+    assert model.output_shape == (None, 7, 7, 128)
+    model.add(tf.keras.layers.BatchNormalization())
+    model.add(tf.keras.layers.LeakyReLU())
+
+    model.add(tf.keras.layers.Conv2DTranspose(64, (5, 5), strides=(2, 2), padding='same', use_bias=False))
+    assert model.output_shape == (None, 14, 14, 64)
+    model.add(tf.keras.layers.BatchNormalization())
+    model.add(tf.keras.layers.LeakyReLU())
+
+    model.add(tf.keras.layers.Conv2DTranspose(1, (5, 5), strides=(2, 2), padding='same', use_bias=False, activation='tanh'))
+    assert model.output_shape == (None, 28, 28, 1)
+
+    return model
+
+# Define the discriminator network
+def make_discriminator_model():
+    model = tf.keras.Sequential()
+    model.add(tf.keras.layers.Conv2D(64, (5, 5), strides=(2, 2), padding='same',
+                                     input_shape=[28, 28, 1]))
+    model.add(tf.keras.layers.LeakyReLU())
+    model.add(tf.keras.layers.Dropout(0.3))
+
+    model.add(tf.keras.layers.Conv2D(128, (5, 5), strides=(2, 2), padding='same'))
+    model.add(tf.keras.layers.LeakyReLU())
+    model.add(tf.keras.layers.Dropout(0.3))
+
+    model.add(tf.keras.layers.Flatten())
+    model.add(tf.keras.layers.Dense(1))
+
+    return model
+
+# Define the loss functions for the generator and discriminator networks
+cross_entropy = tf.keras.losses.BinaryCrossentropy(from_logits=True)
+
+def discriminator_loss(real_output, fake_output):
+    real_loss = cross_entropy(tf.ones_like(real_output), real_output)
+    fake_loss = cross_entropy(tf.zeros_like(fake_output), fake_output)
+    total_loss = real_loss + fake_loss
+    return total_loss
+
+def generator_loss(fake_output):
+    return cross_entropy(tf.ones_like(fake_output), fake_output)
+
+# Define the optimizers for the generator and discriminator networks
+generator_optimizer = tf.keras.optimizers.Adam(1e-4)
+discriminator_optimizer = tf.keras.optimizers.Adam(1e-4)
+
+# Define the training loop for the GAN
+@tf.function
+def train_step(images):
+    noise = tf.random.normal([BATCH_SIZE, 100])
+
+    with tf.GradientTape() as gen_tape, tf.GradientTape() as disc_tape:
+        generated_images = generator(noise, training=True)
+
+        real_output = discriminator(images, training=True)
+        fake_output = discriminator(generated_images, training=True)
+
+        gen_loss = generator_loss(fake_output)
+        disc_loss = discriminator_loss(real_output, fake_output)
+
+gradients_of_generator = gen_tape.gradient(gen_loss, generator.trainable_variables)
+    gradients
+
+
+---------------------------------------------------------------------
+
+import gym
+import numpy as np
+import tensorflow as tf
+
+env = gym.make('CartPole-v0')
+state_size = 4
+action_size = 2
+
+# Define the Q-network
+model = tf.keras.Sequential([
+    tf.keras.layers.Dense(24, input_dim=state_size, activation='relu'),
+    tf.keras.layers.Dense(24, activation='relu'),
+    tf.keras.layers.Dense(action_size, activation='linear')
+])
+model.compile(loss='mse', optimizer=tf.keras.optimizers.Adam(lr=0.001))
+
+# Define the hyperparameters
+gamma = 0.95
+epsilon = 1.0
+epsilon_min = 0.01
+epsilon_decay = 0.995
+batch_size = 64
+memory = []
+
+# Define the function for choosing an action
+def choose_action(state, epsilon):
+    if np.random.rand() <= epsilon:
+        return env.action_space.sample()
+    else:
+        q_values = model.predict(state)
+        return np.argmax(q_values[0])
+
+# Define the function for updating the Q-network
+def update_model(batch_size, gamma):
+    global memory
+    if len(memory) < batch_size:
+        return
+    batch = np.array(memory)
+    states = np.vstack(batch[:, 0])
+    actions = np.array(batch[:, 1], dtype=np.int32)
+    rewards = np.array(batch[:, 2], dtype=np.float32)
+    next_states = np.vstack(batch[:, 3])
+    dones = np.array(batch[:, 4], dtype=np.bool)
+    q_values = model.predict(states)
+    next_q_values = model.predict(next_states)
+    max_next_q_values = np.max(next_q_values, axis=1)
+    targets = rewards + (1 - dones) * gamma * max_next_q_values
+    targets_full = q_values.copy()
+    targets_full[np.arange(len(actions)), actions] = targets
+    model.fit(states, targets_full, epochs=1, verbose=0)
+    if epsilon > epsilon_min:
+        epsilon *= epsilon_decay
+
+# Train the agent
+for i_episode in range(1000):
+    state = env.reset()
+    state = np.reshape(state, [1, state_size])
+    done = False
+    total_reward = 0
+    while not done:
+        action = choose_action(state, epsilon)
+        next_state, reward, done, info = env.step(action)
+        next_state = np.reshape(next_state, [1, state_size])
+        total_reward += reward
+        memory.append((state, action, reward, next_state, done))
+        state = next_state
+        update_model(batch_size, gamma)
+    print('Episode {}: Total reward = {}'.format(i_episode + 1, total_reward))
+
+----------------------------------------------------------------------------------
+
+
+
+
+
+
+
+
